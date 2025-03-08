@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ModelsView: View {
     @EnvironmentObject var linkModelManager: LinkModelManager
+    @EnvironmentObject var downloadManager: DownloadManager
     @State var isAddingNewModel = false
     
     var body: some View {
@@ -56,9 +57,11 @@ struct ModelsView: View {
                 NewModelView(
                     isPresented: $isAddingNewModel
                 )
+                .environmentObject(linkModelManager)
+                .environmentObject(downloadManager)
             }
             .textFieldStyle(.roundedBorder)
-            .environmentObject(linkModelManager)
+            
         }
     }
 }

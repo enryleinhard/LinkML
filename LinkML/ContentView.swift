@@ -8,25 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var linkPeripheralManager: LinkPeripheralManager
-    @StateObject private var linkModelManager: LinkModelManager
-    @StateObject private var pipelineManager: PipelineManager
-    @StateObject private var bleManager: BLEManager
-    
-    init() {
-        let linkPeripheralManager = LinkPeripheralManager()
-        _linkPeripheralManager = StateObject(wrappedValue: linkPeripheralManager)
-        
-        let linkModelManager = LinkModelManager()
-        _linkModelManager = StateObject(wrappedValue: linkModelManager)
-        
-        let pipelineManager = PipelineManager(linkModelManager: linkModelManager, linkPeripheralManager: linkPeripheralManager)
-        _pipelineManager = StateObject(wrappedValue: pipelineManager)
-        
-        let bleManager = BLEManager(linkPeripheralManager: linkPeripheralManager, pipelineManager: pipelineManager)
-        _bleManager = StateObject(wrappedValue: bleManager)
-        
-    }
+    @EnvironmentObject var linkPeripheralManager: LinkPeripheralManager
+    @EnvironmentObject var linkModelManager: LinkModelManager
+    @EnvironmentObject var pipelineManager: PipelineManager
+    @EnvironmentObject var bleManager: BLEManager
+    @EnvironmentObject var downloadManager: DownloadManager
     
     @State var selectedTab: Int = 0
     
@@ -61,5 +47,6 @@ struct ContentView: View {
         .environmentObject(linkPeripheralManager)
         .environmentObject(linkModelManager)
         .environmentObject(pipelineManager)
+        .environmentObject(downloadManager)
     }
 }

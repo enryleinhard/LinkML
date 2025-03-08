@@ -9,12 +9,11 @@ import SwiftUI
 
 struct NewModelView: View {
     @EnvironmentObject var linkModelManager: LinkModelManager
+    @EnvironmentObject var downloadManager: DownloadManager
     @Binding var isPresented: Bool
     
     @State var modelName = ""
-    @State var modelDownloadURL: String = ""
-    
-    @State var isDownloading = false
+    @State var modelURLString: String = ""
     
     var body: some View {
         NavigationView {
@@ -29,7 +28,7 @@ struct NewModelView: View {
                     }
                     
                     Section {
-                        TextField("Name", text: $modelDownloadURL)
+                        TextField("Name", text: $modelURLString)
                     } header: {
                         Text("URL")
                     } footer: {
@@ -49,24 +48,21 @@ struct NewModelView: View {
                 
                 ToolbarItem (placement: .topBarTrailing) {
                     Button {
-                        self.isPresented.toggle()
+                        self.downloadModel(from: modelURLString)
                     } label: {
                         Text("Confirm")
                     }
-                    .disabled(isDownloading)
                 }
             }
         }
     }
     
-    func downloadModel() {
-        Task {
-//            isDownloading.toggle()
-//            await linkModelManager.downloadAndSaveModel(from: downloadURL)
-//            availableModelURLs = linkModelManager.fetchAvailableModels()
-//            downloadURL.removeAll()
-//            isDownloading.toggle()
-//            isPresented.toggle()
+    func downloadModel(from: String) {
+        let downloadURL = URL(string: from)
+        guard let downloadURL = downloadURL else {
+            return
         }
+        downloadManager.addDownloadTask(downloadURL: downloadURL)
+        isPresented.toggle()
     }
 }
