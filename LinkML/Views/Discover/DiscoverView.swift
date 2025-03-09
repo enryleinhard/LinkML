@@ -13,16 +13,23 @@ struct DiscoverView: View {
     var body: some View {
         NavigationView {
             VStack () {
-                List(bleManager.discoveredPeripherals.elements, id: \.key) { peripheralId, peripheral  in
-                    DiscoveredPeripheral(linkPeripheral: peripheral)
-                        .environmentObject(bleManager)
-                }.listStyle(.grouped)
+                if bleManager.isBluetoothOn {
+                    List(bleManager.discoveredPeripherals.elements, id: \.key) { peripheralId, peripheral  in
+                        DiscoveredPeripheral(linkPeripheral: peripheral)
+                            .environmentObject(bleManager)
+                    }
+                    .listStyle(.grouped)
+                    .onAppear {
+                        bleManager.startScan()
+                    }
+                    .onDisappear {
+                        bleManager.stopScan()
+                    }
+                } else {
+                    Text("Bluetooth is OFF")
+                }
             }
             .navigationTitle("Discover")
         }
     }
 }
-
-//#Preview {
-//    DiscoverView()
-//}

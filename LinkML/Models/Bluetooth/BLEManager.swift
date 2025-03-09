@@ -14,7 +14,10 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     private var linkPeripheralManager: LinkPeripheralManager!
     private var pipelineManager: PipelineManager!
     
+    private var scanTimer: Timer?
+    
     @Published var discoveredPeripherals: OrderedDictionary<UUID, LinkPeripheral> = [:]
+    @Published var isBluetoothOn: Bool = false
     
     init(linkPeripheralManager: LinkPeripheralManager, pipelineManager: PipelineManager) {
         super.init()
@@ -22,16 +25,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         self.linkPeripheralManager = linkPeripheralManager
         self.pipelineManager = pipelineManager
     }
-    
     // MARK: - Central Manager Delegate
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if (central.state == .poweredOn) {
-            print("Start Scanning ...")
-            centralManager.scanForPeripherals(withServices: nil, options: nil)
+            isBluetoothOn = true
         } else {
-            print("Stop Scanning ...")
-            centralManager.stopScan()
+            isBluetoothOn = false
         }
     }
     
@@ -139,13 +139,21 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     // MARK: - Manager
     
     func startScan() {
-        print("Start scanning...")
-        centralManager.scanForPeripherals(withServices: nil, options: nil)
+        if !self.isBluetoothOn {
+            return;
+        }
+        stopScan()
+        scanTimer = Timer.scheduledTimer(withTimeInterval: Constants.ScannerSettings.scanInterval, repeats: true) { [weak self] _ in
+            self?.centralManager.stopScan()
+            self?.centralManager.scanForPeripherals(withServices: nil, options: nil)
+        }
+        scanTimer?.fire()
     }
     
     func stopScan() {
-        print("Stop scanning...")
-        centralManager.stopScan()
+        scanTimer?.invalidate()
+        scanTimer = nil
+        self.centralManager.stopScan()
     }
     
     // MARK: - Peripheral
