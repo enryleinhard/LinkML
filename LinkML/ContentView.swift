@@ -18,7 +18,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView (selection: $selectedTab) {
-            ScannerView()
+            DiscoverView()
                 .tabItem {
                     Image(systemName: "waveform.badge.magnifyingglass")
                     Text("Discover")
