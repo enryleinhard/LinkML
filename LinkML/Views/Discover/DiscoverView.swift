@@ -15,7 +15,7 @@ struct DiscoverView: View {
             VStack () {
                 if bleManager.isBluetoothOn {
                     List(bleManager.discoveredPeripherals.elements, id: \.key) { peripheralId, peripheral  in
-                        DiscoveredPeripheral(linkPeripheral: peripheral)
+                        DiscoveredPeripheralView(linkPeripheral: peripheral)
                             .environmentObject(bleManager)
                     }
                     .listStyle(.grouped)

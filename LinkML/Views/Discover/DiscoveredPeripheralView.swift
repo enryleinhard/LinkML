@@ -30,7 +30,7 @@ struct RSSIText: View {
     }
 }
 
-struct DiscoveredPeripheral: View {
+struct DiscoveredPeripheralView: View {
     @EnvironmentObject var bleManager: BLEManager
     
     let linkPeripheral: LinkPeripheral

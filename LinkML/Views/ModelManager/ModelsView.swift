@@ -1,5 +1,5 @@
 //
-//  ModelManagerView.swift
+//  ModelsView.swift
 //  LinkML
 //
 //  Created by Enryl Einhard on 31/1/2025.

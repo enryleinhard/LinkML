@@ -53,28 +53,5 @@ class LinkModelManager: ObservableObject {
     func getModel(from linkModelId: UUID) -> LinkModel? {
         return availableModels[linkModelId]
     }
-    
-//    func downloadAndSaveModel(from urlString: String) async -> URL? {
-//        guard let url = URL(string: urlString) else {
-//            print("Invalid URL string.")
-//            return nil
-//        }
-//        do {
-//            let (tempURL, _) = try await URLSession.shared.download(from: url)
-//            let compiledURL = try await MLModel.compileModel(at: tempURL)
-//            let modelName = url.lastPathComponent.replacingOccurrences(of: ".mlmodel", with: "")
-//            let destURL = modelsDir.appendingPathComponent(modelName + ".mlmodelc")
-//            try FileManager.default.moveItem(at: compiledURL, to: destURL)
-//            return destURL
-//        } catch {
-//            print("Error downloading or saving model: \(error)")
-//            return nil
-//        }
-//    }
-//
-//
-//    func getModel(from modelName: String) -> LinkModel? {
-//        return loadedModels[modelName]
-//    }
 }
 

@@ -1,15 +1,16 @@
 //
-//  DeviceDetailView.swift
+//  ConnectedPeripheralDetailView.swift
 //  LinkML
 //
 //  Created by Enryl Einhard on 4/2/2025.
 //
 import SwiftUI
 
-struct PeripheralDetailView: View {
+struct ConnectedPeripheralDetailView: View {
     @EnvironmentObject var linkPeripheralManager: LinkPeripheralManager
     
     var peripheral: LinkPeripheral
+    
     @State var isEditingCharType: Bool = false
     
     var body: some View {

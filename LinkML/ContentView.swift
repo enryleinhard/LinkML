@@ -24,10 +24,10 @@ struct ContentView: View {
                     Text("Discover")
                 }
                 .tag(0)
-            PeripheralsView()
+            ConnectedPeripheralsView()
                 .tabItem {
-                    Image(systemName: "wave.3.forward.circle")
-                    Text("Devices")
+                    Image(systemName: "dot.radiowaves.forward")
+                    Text("Peripherals")
                 }
                 .tag(1)
             ModelsView()
