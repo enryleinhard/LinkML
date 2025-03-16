@@ -12,23 +12,47 @@ struct LinkModel: Identifiable {
     let id: UUID
     let name: String
     
-    let pathURL: URL
-    
+    var pathURL: URL?
     var coreMLModel: MLModel?
-    var isModelLoaded: Bool { coreMLModel != nil }
+    
+    var downloadProgress: Double?
+    
+    var isDownloading: Bool {
+        downloadProgress != nil
+    }
+    var isReady: Bool {
+        downloadProgress == nil && pathURL != nil
+    }
+    var isLoaded: Bool {
+        coreMLModel != nil
+    }
+    
+    init(name: String) {
+        self.id = UUID()
+        self.name = name
+        self.pathURL = nil
+        self.coreMLModel = nil
+        self.downloadProgress = nil
+    }
     
     init(name: String, pathURL: URL) {
         self.id = UUID()
         self.name = name
         self.pathURL = pathURL
+        self.coreMLModel = nil
+        self.downloadProgress = nil
     }
     
     mutating func loadModel() {
-        do {
-            let coreMLModel = try MLModel(contentsOf: pathURL)
-            self.coreMLModel = coreMLModel
-        } catch {
-            print("Error loading model: \(error)")
+        if (self.isReady) {
+            do {
+                let coreMLModel = try MLModel(contentsOf: pathURL!)
+                self.coreMLModel = coreMLModel
+            } catch {
+                print("ERR: Model loading failed.")
+            }
+        } else {
+            print("ERR: Model is not ready.")
         }
     }
     

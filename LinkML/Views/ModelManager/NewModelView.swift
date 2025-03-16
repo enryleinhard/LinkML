@@ -62,7 +62,7 @@ struct NewModelView: View {
         guard let downloadURL = downloadURL else {
             return
         }
-        downloadManager.addDownloadTask(downloadURL: downloadURL)
+        linkModelManager.downloadModel(modelName: modelName, modelURL: downloadURL)
         isPresented.toggle()
     }
 }

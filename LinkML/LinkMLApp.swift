@@ -24,7 +24,7 @@ struct LinkMLApp: App {
         let linkPeripheralManager = LinkPeripheralManager()
         _linkPeripheralManager = StateObject(wrappedValue: linkPeripheralManager)
         
-        let linkModelManager = LinkModelManager()
+        let linkModelManager = LinkModelManager(downloadManager: downloadManager)
         _linkModelManager = StateObject(wrappedValue: linkModelManager)
         
         let pipelineManager = PipelineManager(linkModelManager: linkModelManager, linkPeripheralManager: linkPeripheralManager)

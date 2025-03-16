@@ -32,7 +32,7 @@ struct NewPipelineView: View {
                     Section {
                         Picker("Model", selection: $selectedLinkModelId) {
                             ForEach(linkModelManager.availableModels.elements, id: \.key) { linkModelId, linkModel in
-                                if linkModel.isModelLoaded {
+                                if linkModel.isLoaded {
                                     Text(linkModel.name).tag(linkModelId)
                                 }
                             }

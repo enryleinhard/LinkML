@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DownloadableTask: Identifiable {
+struct LinkDownloadTask: Identifiable {
     let id = UUID()
     let downloadURL: URL
     var downloadStatus: DownloadStatus = .pending
