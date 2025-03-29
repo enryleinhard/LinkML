@@ -34,7 +34,6 @@ struct PipelineDetailView: View {
                             .foregroundStyle(.secondary)
                         }
                     }
-                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                 }
                 
                 Divider()
@@ -42,13 +41,12 @@ struct PipelineDetailView: View {
                     Text("Pipeline Output").bold()
                     ForEach(pipeline.pipelineOutput.sorted(by: { $0.key < $1.key }), id: \.key) { outputKey, outputResult in
                         HStack {
-                            Text("\(outputKey):  \(outputResult)")
+                            Text("\(outputKey): \(outputResult)")
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
                             Spacer()
                         }
                     }
-                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                 }
                 
                 Spacer()

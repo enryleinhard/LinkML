@@ -18,35 +18,11 @@ struct PipelinesView: View {
         NavigationView {
             VStack () {
                 List(pipelineManager.availablePipelines.elements, id: \.key) { pipelineId, pipeline in
-                    NavigationLink (
-                        destination: PipelineDetailView(pipeline: pipeline)
-                    )
-                    {
-                        HStack {
-                            Image(systemName: "list.bullet")
-                            VStack(
-                                alignment: .leading
-                            ) {
-                                Text(pipeline.pipelineName)
-                                    .bold()
-                                
-                                Text(pipelineId.uuidString)
-                                    .font(.caption2)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            Button(action: {
-                                
-                            }) {
-                                Image(systemName: "square.and.pencil")
-                            }
-                        }
-                        .padding(2)
-                    }
+                    PipelineView(pipeline: pipeline)
                 }
                 .listStyle(.grouped)
             }
-            .navigationTitle("Data Pipelines")
+            .navigationTitle("Pipelines")
             .toolbar {
                 Button {
                     self.isAddingNewPipeline.toggle()
